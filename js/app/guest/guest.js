@@ -244,26 +244,26 @@ export const guest = (() => {
     /**
      * @returns {void}
      */
-    const buildGoogleCalendar = () => {
-        /**
-         * @param {string} d 
-         * @returns {string}
-         */
-        const formatDate = (d) => (new Date(d.replace(' ', 'T') + ':00Z')).toISOString().replace(/[-:]/g, '').split('.').shift();
+    // const buildGoogleCalendar = () => {
+    //     /**
+    //      * @param {string} d 
+    //      * @returns {string}
+    //      */
+    //     const formatDate = (d) => (new Date(d.replace(' ', 'T') + ':00Z')).toISOString().replace(/[-:]/g, '').split('.').shift();
 
-        const url = new URL('https://calendar.google.com/calendar/render');
-        const data = new URLSearchParams({
-            action: 'TEMPLATE',
-            text: 'The Wedding of Felbi and Fernandya',
-            dates: `${formatDate('2025-12-12 10:00')}/${formatDate('2025-12-12 11:00')}`,
-            details: 'Tanpa mengurangi rasa hormat, kami mengundang Anda untuk berkenan menghadiri acara pernikahan kami. Terima kasih atas perhatian dan doa restu Anda, yang menjadi kebahagiaan serta kehormatan besar bagi kami.',
-            location: 'Sirnabaya, Telukjambe Timur, Karawang, Jawa Barat 41361',
-            ctz: config.get('tz'),
-        });
+    //     const url = new URL('https://calendar.google.com/calendar/render');
+    //     const data = new URLSearchParams({
+    //         action: 'TEMPLATE',
+    //         text: 'The Wedding of Felbi and Fernandya',
+    //         dates: `${formatDate('2025-12-12 10:00')}/${formatDate('2025-12-12 11:00')}`,
+    //         details: 'Tanpa mengurangi rasa hormat, kami mengundang Anda untuk berkenan menghadiri acara pernikahan kami. Terima kasih atas perhatian dan doa restu Anda, yang menjadi kebahagiaan serta kehormatan besar bagi kami.',
+    //         location: 'Sirnabaya, Telukjambe Timur, Karawang, Jawa Barat 41361',
+    //         ctz: config.get('tz'),
+    //     });
 
-        url.search = data.toString();
-        document.querySelector('#home button')?.addEventListener('click', () => window.open(url, '_blank'));
-    };
+    //     url.search = data.toString();
+    //     document.querySelector('#home button')?.addEventListener('click', () => window.open(url, '_blank'));
+    // };
 
     /**
      * @returns {object}
@@ -295,7 +295,7 @@ export const guest = (() => {
         showGuestName();
         modalImageClick();
         normalizeArabicFont();
-        buildGoogleCalendar();
+        // buildGoogleCalendar();
 
         if (information.has('presence')) {
             document.getElementById('form-presence').value = information.get('presence') ? '1' : '2';
