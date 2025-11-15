@@ -23,7 +23,7 @@ const weddingData = {
       father: "Bapak Muhdi",
       mother: "Ibu Ine Sarita",
       childOrder: "Putra ke-1",
-      photo: "/assets/images/cowo1.webp"
+      photo: "/images/cowo1.webp"
     },
     female: {
       name: "Fernandya Bigena Yuko",
@@ -31,7 +31,7 @@ const weddingData = {
       father: "Bapak Imam Febi Yuko",
       mother: "Ibu Sunarti Woso",
       childOrder: "Putri ke-1",
-      photo: "/assets/images/cewe1.webp"
+      photo: "/images/cewe1.webp"
     }
   },
   event: {
