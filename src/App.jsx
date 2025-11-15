@@ -62,10 +62,10 @@ orang-orang tercinta.`,
   },
 
   assets: {
-    audio: "/assets/music/pure-love-304010.mp3",
-    mainPhoto: "/assets/images/bg1.webp",
-    placeholder: "/assets/images/placeholder.webp",
-    video: "/assets/video/265501_tiny.mp4"
+    audio: "/music/pure-love-304010.mp3",
+    mainPhoto: "/images/bg1.webp",
+    placeholder: "/images/placeholder.webp",
+    video: "/video/265501_tiny.mp4"
   }
 };
 
