@@ -1,16 +1,25 @@
 {
-  "devDependencies": {
-    "chokidar": "^4.0.3",
-    "ws": "^8.18.3"
-  },
+  "name": "invitation-wedding-ff",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
   "scripts": {
-    "dev": "npm run build:static && node dev-server.js",
-    "build:static": "npx esbuild js/app/static.js --bundle --minify --outfile=dist/static.js",
-    "build": "npm run build:static && npm run build:copy",
-    "build:copy": "node -e \"const fs=require('fs-extra'); Promise.all([fs.copy('index.html','dist/index.html'), fs.copy('wedding-config.js','dist/wedding-config.js'), fs.copy('_redirects','dist/_redirects'), fs.copy('_headers','dist/_headers'), fs.copy('assets','dist/assets'), fs.copy('css','dist/css')]).then(()=>console.log('✅ Build files copied successfully!')).catch(err=>console.error('❌ Error copying files:', err));\""
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "esbuild": "^0.24.2",
-    "fs-extra": "^11.3.0"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "bootstrap": "^5.3.7",
+    "@fortawesome/fontawesome-free": "^6.7.2",
+    "aos": "^2.3.4"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.66",
+    "@types/react-dom": "^18.2.22",
+    "@vitejs/plugin-react": "^4.2.1",
+    "vite": "^5.2.0"
   }
 }
