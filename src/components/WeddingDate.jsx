@@ -66,14 +66,14 @@ const WeddingDate = ({ data, countdown }) => {
             <div className="card shadow-sm border-0 mb-3">
               <div className="card-body text-center p-3">
                 <h5 className="font-esthetic mb-2" style={{ fontSize: "1.25rem" }}>
-                  {data.location.name}
+                  {data.event.location.name}
                 </h5>
                 <p className="mb-2 small text-muted">
                   <i className="fa-solid fa-map-marker-alt me-2"></i>
-                  {data.location.address}
+                  {data.event.location.address}
                 </p>
                 <a
-                  href={data.location.mapsUrl}
+                  href={data.event.location.mapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-sm btn-outline-primary rounded-pill px-3"
