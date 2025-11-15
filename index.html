@@ -28,7 +28,8 @@
   <!-- JS Dependencies -->
   <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
           integrity="sha256-NfRUfZNkERrKSFA0c1a8VmCplPDYtpTYj5lQmKe1R/o=" crossorigin="anonymous"></script>
-  <script defer src="./dist/guest.js?v=1"></script>
+  <script defer src="./wedding-config.js"></script>
+  <script defer src="./dist/static.js"></script>
 </head>
 
 
@@ -410,57 +411,19 @@
                     </svg>
                 </div>
 
-                <!-- Comment -->
-                <section class="bg-light-dark my-0 pb-0 pt-3" id="comment">
+                <!-- Wishes Section (Static) -->
+                <section class="bg-light-dark my-0 pb-0 pt-3" id="wishes">
                     <div class="container">
                         <div class="border rounded-5 shadow p-3 mb-2">
-                            <h2 class="font-esthetic text-center mt-2 mb-4" style="font-size: 2.25rem;">Ucapan &amp; Doa</h2>
+                            <h2 class="font-esthetic text-center mt-2 mb-4" style="font-size: 2.25rem;">Ucapan & Doa</h2>
 
-                            <div class="mb-3">
-                                <label for="form-name" class="form-label my-1"><i class="fa-solid fa-person me-2"></i>Nama</label>
-                                <input type="text" class="form-control shadow-sm rounded-4" id="form-name" minlength="2" maxlength="50" placeholder="Isikan Nama Anda" autocomplete="name" data-offline-disabled="false">
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="form-presence" class="form-label my-1"><i class="fa-solid fa-person-circle-question me-2"></i>Presensi</label>
-                                <select class="form-select shadow-sm rounded-4" id="form-presence" autocomplete="off" data-offline-disabled="false">
-                                    <option value="0" selected>Konfirmasi Presensi</option>
-                                    <option value="1">&#9989; Datang</option>
-                                    <option value="2">&#10060; Berhalangan</option>
-                                </select>
-                            </div>
-
-                            <div class="d-block mb-3" id="comment-form-default">
-                                <div id="information" class="alert alert-info alert-dismissible fade show rounded-4" role="alert">
-                                    <button type="button" class="btn-close rounded-4 p-3" data-bs-dismiss="alert" aria-label="Close" onclick="undangan.guest.closeInformation()"></button>
-
-                                    <p style="font-size: 1.5rem;">Thank you</p>
-                                    <p class="m-0"></p>
-                                    <hr class="my-2">
-                                    <p class="m-0"></p>
-                                </div>
-
-                                <label for="form-comment" class="form-label my-1"><i class="fa-solid fa-comment me-2"></i>Ucapan &amp; Doa</label>
-                                <div class="position-relative">
-                                    <button class="btn btn-secondary btn-sm rounded-4 shadow-sm me-1 my-1 position-absolute bottom-0 end-0" onclick="undangan.comment.gif.open(undangan.comment.gif.default)" aria-label="button gif" data-offline-disabled="false"><i class="fa-solid fa-photo-film"></i></button>
-                                    <textarea class="form-control shadow-sm rounded-4" id="form-comment" rows="4" minlength="1" maxlength="1000" placeholder="Tulis Ucapan dan Doa" autocomplete="off" data-offline-disabled="false"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="d-none mb-3" id="gif-form-default"></div>
-
-                            <div class="d-grid">
-                                <button class="btn btn-primary btn-sm rounded-4 shadow m-1" onclick="undangan.comment.send(this)" data-offline-disabled="false">
-                                    <i class="fa-solid fa-paper-plane me-2"></i>Send
-                                </button>
+                            <div class="text-center py-5">
+                                <i class="fa-solid fa-heart fa-3x text-danger mb-3"></i>
+                                <h4>Terima Kasih</h4>
+                                <p class="text-muted">Atas perhatian dan doa restu Anda, yang menjadi kebahagiaan serta kehormatan besar bagi kami.</p>
+                                <p class="small text-muted">Silakan hubungi kami langsung untuk memberikan ucapan dan konfirmasi kehadiran.</p>
                             </div>
                         </div>
-
-                        <!-- Comments -->
-                        <div class="py-3" id="comments" data-loading="false"></div>
-
-                        <!-- Pagination -->
-                        <nav class="d-flex d-none justify-content-center mt-1 mb-0" id="pagination"></nav>
                     </div>
                 </section>
 
@@ -519,8 +482,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#comment">
-                            <i class="fa-solid fa-comments"></i>
+                        <a class="nav-link" href="#wishes">
+                            <i class="fa-solid fa-heart"></i>
                             <span class="d-block" style="font-size: 0.7rem;">Ucapan</span>
                         </a>
                     </li>
@@ -548,8 +511,8 @@
     <!-- Button Group -->
     <div class="d-flex position-fixed flex-column" style="bottom: 10vh; right: 2vh; z-index: 1030;">
         <!-- Theme Button -->
-        <button type="button" id="button-theme" class="btn bg-light-dark border btn-sm rounded-circle d-none btn-transparent shadow-sm mt-3" aria-label="Change theme" onclick="undangan.theme.change()">
-            <i class="fa-solid fa-circle-half-stroke"></i>
+        <button type="button" id="button-theme" class="btn bg-light-dark border btn-sm rounded-circle d-none btn-transparent shadow-sm mt-3" aria-label="Change theme">
+            <i class="fa-solid fa-moon"></i>
         </button>
 
         <!-- Audio Button -->
