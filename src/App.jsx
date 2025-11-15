@@ -62,7 +62,7 @@ orang-orang tercinta.`,
   },
 
   assets: {
-    audio: "/assets/music/imagine.mp3",
+    audio: "/assets/music/pure-love-304010.mp3",
     mainPhoto: "/assets/images/bg1.webp",
     placeholder: "/assets/images/placeholder.webp",
     video: "/assets/video/265501_tiny.mp4"
@@ -124,6 +124,7 @@ function App() {
         audioRef.current.play().catch(err => {
           console.log('Auto-play prevented by browser:', err);
           // Fallback: show user prompt or handle gracefully
+          setMusicPlaying(false); // Reset state if play fails
         });
       } else {
         audioRef.current.pause();
@@ -161,7 +162,17 @@ function App() {
 
       // Start music automatically when invitation opens
       setTimeout(() => {
-        setMusicPlaying(true);
+        if (audioRef.current) {
+          audioRef.current.volume = 0.3;
+          audioRef.current.play().then(() => {
+            setMusicPlaying(true);
+          }).catch(err => {
+            console.log('Auto-play failed:', err);
+            // User will need to manually click music button
+          });
+        } else {
+          setMusicPlaying(false);
+        }
       }, 1000); // Start music after 1 second for dramatic effect
 
       // Reset animation state after completion
@@ -226,17 +237,21 @@ function App() {
 
   const toggleMusic = () => {
     const newMusicState = !musicPlaying;
-    setMusicPlaying(newMusicState);
 
     if (audioRef.current) {
       if (newMusicState) {
         audioRef.current.volume = 0.3;
         audioRef.current.play().catch(err => {
           console.log('Music play failed:', err);
+          setMusicPlaying(false); // Reset state if play fails
         });
+        setMusicPlaying(true); // Set state optimistically
       } else {
         audioRef.current.pause();
+        setMusicPlaying(false);
       }
+    } else {
+      setMusicPlaying(newMusicState);
     }
   };
 
