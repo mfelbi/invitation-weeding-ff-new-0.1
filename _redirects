@@ -1,1 +1,8 @@
-/*    /index.html   200
+# Static assets
+/assets/*    /assets/:splat   200
+/css/*       /css/:splat      200
+/dist/*      /dist/:splat     200
+/js/*        /js/:splat       200
+
+# Fallback for SPA routes
+/*            /index.html      200
