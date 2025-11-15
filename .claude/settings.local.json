@@ -18,7 +18,8 @@
       "Bash(powershell:*)",
       "Bash(curl:*)",
       "Bash(timeout 10 npm run dev:*)",
-      "Bash(xdg-open:*)"
+      "Bash(xdg-open:*)",
+      "Bash(/home/yoi27/Documents/hehe/mbi/WeedingInvitation/invitation-weeding-ff-new-0.1/.vercelignore)"
     ],
     "deny": [],
     "ask": []
