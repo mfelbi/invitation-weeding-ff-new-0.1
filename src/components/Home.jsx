@@ -10,6 +10,7 @@ const Home = ({ data, openModal }) => {
           src={data.assets.mainPhoto}
           alt="bg"
           className="position-absolute opacity-25 top-50 start-50 translate-middle bg-cover-home w-100 h-100 object-fit-cover"
+          loading="lazy"
         />
 
         <div className="position-relative text-center bg-overlay-auto" style={{ backgroundColor: "unset" }}>
@@ -28,6 +29,7 @@ const Home = ({ data, openModal }) => {
               onClick={() => openModal(data.assets.mainPhoto)}
               className="img-center-crop rounded-circle border border-3 border-light shadow my-4 mx-auto cursor-pointer love-pulse"
               style={{ width: "200px", height: "200px", objectFit: "cover" }}
+              loading="eager"
             />
           </div>
 

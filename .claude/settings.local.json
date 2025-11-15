@@ -17,7 +17,8 @@
       "Bash(TASKKILL:*)",
       "Bash(powershell:*)",
       "Bash(curl:*)",
-      "Bash(timeout 10 npm run dev:*)"
+      "Bash(timeout 10 npm run dev:*)",
+      "Bash(xdg-open:*)"
     ],
     "deny": [],
     "ask": []

@@ -102,11 +102,27 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
-  // Loading simulation
+  // Loading simulation - reduced delay for better UX
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
+    // Check if all critical resources are loaded
+    const checkResources = () => {
+      const images = document.querySelectorAll('img');
+      let loadedCount = 0;
+
+      images.forEach(img => {
+        if (img.complete) loadedCount++;
+      });
+
+      // Load when most resources are ready or after minimum delay
+      if (loadedCount >= images.length * 0.7) {
+        setLoading(false);
+      } else {
+        setTimeout(checkResources, 100);
+      }
+    };
+
+    // Minimum delay of 500ms for visual feedback
+    setTimeout(checkResources, 500);
   }, []);
 
   // Initialize theme
@@ -308,12 +324,12 @@ function App() {
             </div>
           </div>
 
-          {/* Hidden Audio Element */}
+          {/* Hidden Audio Element - optimized preloading */}
           <audio
             ref={audioRef}
             src={weddingData.assets.audio}
             loop
-            preload="auto"
+            preload="none"
             playsInline
             muted={false}
             crossOrigin="anonymous"

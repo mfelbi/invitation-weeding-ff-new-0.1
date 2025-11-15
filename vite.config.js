@@ -7,16 +7,22 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
-    sourcemap: true,
+    sourcemap: false, // Disabled for production to reduce bundle size
+    minify: 'esbuild',
     rollupOptions: {
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom'],
-          bootstrap: ['bootstrap']
+          animations: ['aos']
         }
       }
     }
   },
   base: './',
-  publicDir: 'public'
+  publicDir: 'public',
+  server: {
+    headers: {
+      'Cache-Control': 'public, max-age=31536000'
+    }
+  }
 })

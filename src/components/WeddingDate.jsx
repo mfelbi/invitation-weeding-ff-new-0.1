@@ -55,37 +55,48 @@ const WeddingDate = ({ data, countdown }) => {
             </div>
           </div>
 
-          {/* Tombol Maps */}
-          <button
-            type="button"
-            className="btn btn-outline-auto btn-sm rounded-pill shadow mb-2 px-3"
-            data-bs-toggle="modal"
-            data-bs-target="#mapsModal"
-          >
-            <i className="fa-solid fa-map-location-dot me-2"></i>Lihat Google Maps
-          </button>
+          {/* Location Section */}
+          <div className="mt-4" data-aos="fade-up" data-aos-duration="1500">
+            <h3 className="font-esthetic mb-3" style={{ fontSize: "1.5rem" }}>
+              <i className="fa-solid fa-map-location-dot me-2"></i>
+              Lokasi Acara
+            </h3>
 
-          {/* Modal Maps */}
-          <div className="modal fade" id="mapsModal" tabIndex="-1" aria-hidden="true">
-            <div className="modal-dialog modal-lg modal-dialog-centered">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title">Lokasi Google Maps</h5>
-                  <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div className="modal-body p-0">
-                  <iframe
-                    src={mapsEmbedUrl}
-                    width="100%"
-                    height="450"
-                    style={{ border: "0" }}
-                    allowFullScreen=""
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    title="Wedding Location Map"
-                  />
-                </div>
+            {/* Location Info Card */}
+            <div className="card shadow-sm border-0 mb-3">
+              <div className="card-body text-center p-3">
+                <h5 className="font-esthetic mb-2" style={{ fontSize: "1.25rem" }}>
+                  {data.location.name}
+                </h5>
+                <p className="mb-2 small text-muted">
+                  <i className="fa-solid fa-map-marker-alt me-2"></i>
+                  {data.location.address}
+                </p>
+                <a
+                  href={data.location.mapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-sm btn-outline-primary rounded-pill px-3"
+                >
+                  <i className="fa-solid fa-directions me-1"></i>
+                  Petunjuk Arah
+                </a>
               </div>
+            </div>
+
+            {/* Google Maps */}
+            <div className="rounded shadow overflow-hidden">
+              <iframe
+                src={mapsEmbedUrl}
+                width="100%"
+                height="350"
+                style={{ border: "0" }}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Wedding Location Map"
+                className="rounded"
+              />
             </div>
           </div>
         </div>

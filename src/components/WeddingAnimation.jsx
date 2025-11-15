@@ -44,43 +44,45 @@ const WeddingAnimation = ({ isActive, onAnimationComplete }) => {
       }, 100); // Very short delay - just 100ms
     };
 
-    // Create floating hearts (shorter duration, fewer elements)
+    // Create floating hearts (optimized for performance)
     const createFloatingHearts = () => {
       const heartSymbols = ['❤️', '💕', '💖'];
 
-      for (let i = 0; i < 3; i++) { // Reduced from 5 to 3
+      for (let i = 0; i < 2; i++) { // Further reduced from 3 to 2
         setTimeout(() => {
           const heart = document.createElement('div');
           heart.className = 'floating-heart';
           heart.innerHTML = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
           heart.style.left = Math.random() * 100 + '%';
-          heart.style.animationDelay = Math.random() * 0.5 + 's'; // Reduced delay
-          heart.style.fontSize = (Math.random() * 5 + 12) + 'px'; // Smaller size
+          heart.style.animationDelay = Math.random() * 0.3 + 's'; // Further reduced delay
+          heart.style.fontSize = (Math.random() * 3 + 10) + 'px'; // Even smaller size
           heart.style.zIndex = '9998';
+          heart.style.willChange = 'transform, opacity'; // Optimize animation
 
           document.body.appendChild(heart);
 
-          setTimeout(() => heart.remove(), 2000); // Reduced from 4000 to 2000
-        }, i * 100); // Reduced interval
+          setTimeout(() => heart.remove(), 1500); // Reduced from 2000 to 1500
+        }, i * 150); // Increased interval slightly
       }
     };
 
-    // Create sparkles (quick and fewer)
+    // Create sparkles (optimized for performance)
     const createSparkles = () => {
-      for (let i = 0; i < 5; i++) { // Reduced from 8 to 5
+      for (let i = 0; i < 3; i++) { // Further reduced from 5 to 3
         setTimeout(() => {
           const sparkle = document.createElement('div');
           sparkle.className = 'sparkle';
           sparkle.innerHTML = '✨';
           sparkle.style.left = Math.random() * 100 + '%';
           sparkle.style.top = Math.random() * 100 + '%';
-          sparkle.style.animationDelay = Math.random() * 0.2 + 's'; // Reduced delay
+          sparkle.style.animationDelay = Math.random() * 0.1 + 's'; // Further reduced delay
           sparkle.style.zIndex = '9997';
+          sparkle.style.willChange = 'transform, opacity'; // Optimize animation
 
           document.body.appendChild(sparkle);
 
-          setTimeout(() => sparkle.remove(), 500); // Reduced from 1000 to 500
-        }, i * 30); // Reduced interval
+          setTimeout(() => sparkle.remove(), 400); // Reduced from 500 to 400
+        }, i * 50); // Increased interval slightly
       }
     };
 
