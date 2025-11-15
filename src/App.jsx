@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Bride from './components/Bride';
@@ -12,6 +12,7 @@ import Welcome from './components/Welcome';
 import Loading from './components/Loading';
 import FloatingButtons from './components/FloatingButtons';
 import ImageModal from './components/ImageModal';
+import WeddingAnimation from './components/WeddingAnimation';
 
 // Wedding Configuration
 const weddingData = {
@@ -72,10 +73,13 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [showWelcome, setShowWelcome] = useState(true);
   const [showInvitation, setShowInvitation] = useState(false);
+  const [showWeddingAnimation, setShowWeddingAnimation] = useState(false);
+  const [animationCompleted, setAnimationCompleted] = useState(false);
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [modalImage, setModalImage] = useState(null);
   const [musicPlaying, setMusicPlaying] = useState(false);
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState('auto');
+  const audioRef = useRef(null);
 
   // Countdown effect
   useEffect(() => {
@@ -105,11 +109,99 @@ function App() {
     }, 2000);
   }, []);
 
+  // Initialize theme
+  useEffect(() => {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initialTheme = theme === 'auto' ? (prefersDark ? 'dark' : 'light') : theme;
+    document.body.setAttribute('data-bs-theme', initialTheme);
+  }, []);
+
+  // Handle music
+  useEffect(() => {
+    if (audioRef.current) {
+      if (musicPlaying) {
+        // Try to play audio (may be blocked by browser autoplay policy)
+        audioRef.current.play().catch(err => {
+          console.log('Auto-play prevented by browser:', err);
+          // Fallback: show user prompt or handle gracefully
+        });
+      } else {
+        audioRef.current.pause();
+      }
+    }
+  }, [musicPlaying]);
+
+  // Prepare audio for better playback
+  useEffect(() => {
+    if (audioRef.current) {
+      // Preload the audio
+      audioRef.current.load();
+    }
+  }, []);
+
   const openInvitation = () => {
     setShowWelcome(false);
+    // Reset animation state
+    setShowWeddingAnimation(false);
+    setAnimationCompleted(false);
+    setShowInvitation(false);
+
+    // Start wedding animation after brief delay
+    setTimeout(() => {
+      setShowWeddingAnimation(true);
+    }, 300);
+  };
+
+  const handleAnimationComplete = () => {
+    setAnimationCompleted(true);
+    // Show the main invitation with romantic entrance
     setTimeout(() => {
       setShowInvitation(true);
-    }, 500);
+      activateWeddingEntrance();
+
+      // Start music automatically when invitation opens
+      setTimeout(() => {
+        setMusicPlaying(true);
+      }, 1000); // Start music after 1 second for dramatic effect
+
+      // Reset animation state after completion
+      setTimeout(() => {
+        setShowWeddingAnimation(false);
+      }, 2000);
+    }, 300);
+  };
+
+  const activateWeddingEntrance = () => {
+    // Add entrance animations to main elements
+    setTimeout(() => {
+      const elements = document.querySelectorAll('.wedding-entrance');
+      elements.forEach((el, index) => {
+        setTimeout(() => {
+          el.classList.add('active');
+        }, index * 200);
+      });
+    }, 200);
+
+    // Initialize audio playback on first user interaction
+    const initAudio = () => {
+      if (audioRef.current && !audioRef.current.played) {
+        // Create a user interaction to enable audio
+        audioRef.current.volume = 0.3;
+        audioRef.current.played = true;
+
+        // Play a short silent sound to "warm up" the audio context
+        audioRef.current.play().then(() => {
+          audioRef.current.pause();
+        }).catch(() => {
+          // Ignore errors, just trying to initialize audio context
+        });
+      }
+    };
+
+    // Initialize audio on any user interaction
+    document.addEventListener('click', initAudio, { once: true });
+    document.addEventListener('touchstart', initAudio, { once: true });
+    document.addEventListener('keydown', initAudio, { once: true });
   };
 
   const openModal = (imageSrc) => {
@@ -121,12 +213,31 @@ function App() {
   };
 
   const toggleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
-    document.body.setAttribute('data-bs-theme', theme === 'light' ? 'dark' : 'light');
+    const newTheme = theme === 'auto' ? 'light' : theme === 'light' ? 'dark' : 'auto';
+    setTheme(newTheme);
+
+    if (newTheme === 'auto') {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.body.setAttribute('data-bs-theme', prefersDark ? 'dark' : 'light');
+    } else {
+      document.body.setAttribute('data-bs-theme', newTheme);
+    }
   };
 
   const toggleMusic = () => {
-    setMusicPlaying(!musicPlaying);
+    const newMusicState = !musicPlaying;
+    setMusicPlaying(newMusicState);
+
+    if (audioRef.current) {
+      if (newMusicState) {
+        audioRef.current.volume = 0.3;
+        audioRef.current.play().catch(err => {
+          console.log('Music play failed:', err);
+        });
+      } else {
+        audioRef.current.pause();
+      }
+    }
   };
 
   if (loading) {
@@ -144,38 +255,54 @@ function App() {
 
       {showInvitation && (
         <>
-          {/* Desktop Background */}
-          <div className="sticky-top vh-100 d-none d-sm-block col-sm-5 col-md-6 col-lg-7 col-xl-8 col-xxl-9 overflow-y-hidden m-0 p-0">
-            <div className="position-relative bg-white-black d-flex justify-content-center align-items-center vh-100">
-              <div className="d-flex position-absolute w-100 h-100">
-                <div className="position-relative overflow-hidden vw-100">
-                  <div className="position-absolute h-100 w-100 slide-desktop" style={{ opacity: 0.3 }}>
-                    <img src={weddingData.assets.placeholder} alt="bg" className="bg-cover-home w-100 h-100 object-fit-cover" />
+          <div className="row m-0 p-0 opacity-0" id="root">
+            {/* Desktop mode */}
+            <div className="sticky-top vh-100 d-none d-sm-block col-sm-5 col-md-6 col-lg-7 col-xl-8 col-xxl-9 overflow-y-hidden m-0 p-0 wedding-entrance wedding-entrance-delay-1">
+              <div className="position-relative bg-white-black d-flex justify-content-center align-items-center vh-100">
+                <div className="d-flex position-absolute w-100 h-100">
+                  <div className="position-relative overflow-hidden vw-100">
+                    <div className="position-absolute h-100 w-100" style={{ opacity: 0.3 }}>
+                      <img src={weddingData.assets.placeholder} alt="bg" className="w-100 h-100 object-fit-cover" />
+                    </div>
                   </div>
                 </div>
+                <div className="text-center p-4 bg-overlay-auto rounded-5 position-relative z-10 wedding-bounce">
+                  <h2 className="font-esthetic mb-4" style={{ fontSize: "2rem" }}>Felbi & Fernandya</h2>
+                  <p className="m-0" style={{ fontSize: "1rem" }}>Sabtu, 6 Desember 2025</p>
+                </div>
               </div>
-              <div className="text-center p-4 bg-overlay-auto rounded-5">
-                <h2 className="font-esthetic mb-4" style={{ fontSize: "2rem" }}>Felbi & Fernandya</h2>
-                <p className="m-0" style={{ fontSize: "1rem" }}>Sabtu, 6 Desember 2025</p>
-              </div>
+            </div>
+
+            {/* Smartphone mode */}
+            <div className="col-sm-7 col-md-6 col-lg-5 col-xl-4 col-xxl-3 m-0 p-0">
+              {/* Main Content */}
+              <main data-bs-spy="scroll" data-bs-target="#navbar-menu" data-bs-root-margin="25% 0% 0% 0%" data-bs-smooth-scroll="true" tabIndex="0">
+                <Home data={weddingData} openModal={openModal} />
+                <Bride data={weddingData} openModal={openModal} />
+                <QuranVerse />
+                <LoveStory data={weddingData} />
+                <WeddingDate
+                  data={weddingData}
+                  countdown={countdown}
+                />
+                <Gallery data={weddingData} openModal={openModal} />
+                <Wishes />
+                <Footer data={weddingData} />
+                <Navbar />
+              </main>
             </div>
           </div>
 
-          {/* Main Content */}
-          <main data-bs-spy="scroll" data-bs-target="#navbar-menu" data-bs-root-margin="25% 0% 0% 0%" data-bs-smooth-scroll="true" tabIndex="0">
-            <Home data={weddingData} openModal={openModal} />
-            <Bride data={weddingData} openModal={openModal} />
-            <QuranVerse />
-            <LoveStory data={weddingData} />
-            <WeddingDate
-              data={weddingData}
-              countdown={countdown}
-            />
-            <Gallery data={weddingData} openModal={openModal} />
-            <Wishes />
-            <Footer data={weddingData} />
-            <Navbar />
-          </main>
+          {/* Hidden Audio Element */}
+          <audio
+            ref={audioRef}
+            src={weddingData.assets.audio}
+            loop
+            preload="auto"
+            playsInline
+            muted={false}
+            crossOrigin="anonymous"
+          />
 
           <FloatingButtons
             onThemeToggle={toggleTheme}
@@ -185,6 +312,12 @@ function App() {
           />
         </>
       )}
+
+      {/* Wedding Animation */}
+      <WeddingAnimation
+        isActive={showWeddingAnimation}
+        onAnimationComplete={handleAnimationComplete}
+      />
 
       <ImageModal
         image={modalImage}

@@ -5,7 +5,7 @@ const Home = ({ data, openModal }) => {
 
   return (
     <>
-      <section id="home" className="bg-light-dark position-relative overflow-hidden p-0 m-0">
+      <section id="home" className="bg-light-dark position-relative overflow-hidden p-0 m-0 wedding-entrance wedding-entrance-delay-2">
         <img
           src={data.assets.mainPhoto}
           alt="bg"
@@ -13,18 +13,35 @@ const Home = ({ data, openModal }) => {
         />
 
         <div className="position-relative text-center bg-overlay-auto" style={{ backgroundColor: "unset" }}>
-          <h1 className="font-esthetic pt-5 pb-4 fw-medium" style={{ fontSize: "2.25rem" }}>Undangan Pernikahan</h1>
+          <h1 className="font-esthetic pt-5 pb-4 fw-medium zoom-in" style={{ fontSize: "2.25rem" }}>
+            <span className="wedding-entrance">
+              <i className="fa-solid fa-heart text-danger mx-2 heartbeat"></i>
+              Undangan Pernikahan
+              <i className="fa-solid fa-heart text-danger mx-2 heartbeat"></i>
+            </span>
+          </h1>
 
-          <img
-            src={data.assets.mainPhoto}
-            alt="bg"
-            onClick={() => openModal(data.assets.mainPhoto)}
-            className="img-center-crop rounded-circle border border-3 border-light shadow my-4 mx-auto cursor-pointer"
-            style={{ width: "200px", height: "200px", objectFit: "cover" }}
-          />
+          <div className="wedding-entrance wedding-entrance-delay-1">
+            <img
+              src={data.assets.mainPhoto}
+              alt="bg"
+              onClick={() => openModal(data.assets.mainPhoto)}
+              className="img-center-crop rounded-circle border border-3 border-light shadow my-4 mx-auto cursor-pointer love-pulse"
+              style={{ width: "200px", height: "200px", objectFit: "cover" }}
+            />
+          </div>
 
-          <h2 className="font-esthetic my-4" style={{ fontSize: "2.25rem" }}>Felbi & Fernandya</h2>
-          <p className="my-2" style={{ fontSize: "1.25rem" }}>Sabtu, 6 Desember 2025</p>
+          <div className="wedding-entrance wedding-entrance-delay-3">
+            <h2 className="font-esthetic my-4 wedding-bounce" style={{ fontSize: "2.25rem" }}>
+              <i className="fa-solid fa-heart text-danger mx-1"></i>
+              Felbi & Fernandya
+              <i className="fa-solid fa-heart text-danger mx-1"></i>
+            </h2>
+            <p className="my-2 slide-in-up" style={{ fontSize: "1.25rem" }}>
+              <i className="fa-solid fa-calendar me-2"></i>
+              Sabtu, 6 Desember 2025
+            </p>
+          </div>
 
           <a
             href={googleCalendarUrl}

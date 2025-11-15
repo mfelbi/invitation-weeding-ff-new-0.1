@@ -1,0 +1,368 @@
+/* Custom animations and styles */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Wedding themed animations */
+@keyframes floatingHeart {
+  0% {
+    opacity: 0;
+    transform: translateY(100vh) rotate(0deg);
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100vh) rotate(720deg);
+  }
+}
+
+
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
+@keyframes weddingBounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-20px);
+  }
+  60% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes lovePulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 105, 180, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 20px rgba(255, 105, 180, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 105, 180, 0);
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Animation classes */
+.fade-in {
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+.slide-in-up {
+  animation: slideInUp 0.8s ease-out;
+}
+
+.heartbeat {
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+.spin-button:hover {
+  animation: spin 2s linear infinite;
+}
+
+/* Wedding animation classes */
+.floating-heart {
+  position: fixed;
+  color: #ff69b4;
+  font-size: 20px;
+  z-index: 9998;
+  pointer-events: none;
+  animation: floatingHeart 2s ease-in-out forwards;
+}
+
+.sparkle {
+  position: fixed;
+  color: #ffd700;
+  font-size: 16px;
+  z-index: 9997;
+  pointer-events: none;
+  animation: sparkle 0.5s ease-in-out forwards;
+}
+
+.wedding-bounce {
+  animation: weddingBounce 2s ease-in-out;
+}
+
+.love-pulse {
+  animation: lovePulse 2s ease-in-out infinite;
+}
+
+.slide-in-left {
+  animation: slideInFromLeft 1s ease-out;
+}
+
+.slide-in-right {
+  animation: slideInFromRight 1s ease-out;
+}
+
+.zoom-in {
+  animation: zoomIn 0.8s ease-out;
+}
+
+.wedding-entrance {
+  opacity: 0;
+  transform: scale(0.8) translateY(30px);
+  transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.wedding-entrance.active {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* Staggered animations for wedding entrance */
+.wedding-entrance-delay-1 {
+  transition-delay: 0.2s;
+}
+
+.wedding-entrance-delay-2 {
+  transition-delay: 0.4s;
+}
+
+.wedding-entrance-delay-3 {
+  transition-delay: 0.6s;
+}
+
+.wedding-entrance-delay-4 {
+  transition-delay: 0.8s;
+}
+
+.wedding-entrance-delay-5 {
+  transition-delay: 1.0s;
+}
+
+
+/* Fix for root container */
+#root {
+  opacity: 1 !important;
+  transition: opacity 0.6s ease-in-out;
+}
+
+#root.show {
+  opacity: 1;
+}
+
+/* Background fixes */
+.bg-cover-home {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.bg-overlay-auto {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+}
+
+.bg-light-dark {
+  background-color: var(--bs-light);
+  color: var(--bs-dark);
+}
+
+.bg-white-black {
+  background-color: white;
+  color: black;
+}
+
+[data-bs-theme="dark"] .bg-light-dark {
+  background-color: #212529 !important;
+  color: #f8f9fa !important;
+}
+
+[data-bs-theme="dark"] .bg-white-black {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+[data-bs-theme="dark"] .bg-overlay-auto {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(2px);
+}
+
+/* Font styling */
+.font-esthetic {
+  font-family: 'Sacramento', cursive;
+}
+
+.font-arabic {
+  font-family: 'Noto Naskh Arabic', serif;
+}
+
+/* Image centering */
+.img-center-crop {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Button hover effects */
+.btn-outline-auto {
+  border: 2px solid currentColor;
+  color: currentColor;
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-auto:hover {
+  background: currentColor;
+  color: white;
+}
+
+/* Custom scrollbar */
+.with-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.with-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+}
+
+.with-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+}
+
+.with-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* Floating button animations */
+.floating-button {
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: slideInUp 0.6s ease-out 0.8s forwards;
+}
+
+.floating-button:nth-child(2) {
+  animation-delay: 1s;
+}
+
+.floating-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Love animation */
+.animate-love {
+  animation: heartbeat 2s ease-in-out infinite;
+}
+
+/* Wedding color palette */
+.text-pink {
+  color: #ff69b4 !important;
+}
+
+.bg-pink {
+  background-color: #ff69b4 !important;
+}
+
+.text-rose {
+  color: #ff1493 !important;
+}
+
+.bg-rose {
+  background-color: #ff1493 !important;
+}
+
+.text-wedding {
+  background: linear-gradient(45deg, #ff69b4, #ff1493);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Wedding hover effects */
+.wedding-hover:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
+  transition: all 0.3s ease;
+}
+
+/* Mobile responsive fixes */
+@media (max-width: 576px) {
+  .floating-button {
+    bottom: 15vh !important;
+    right: 1vh !important;
+  }
+
+  .font-esthetic {
+    font-size: 0.9em !important;
+  }
+
+  .floating-heart,
+  .falling-petal {
+    font-size: 16px !important;
+  }
+}
