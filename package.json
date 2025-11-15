@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "npm run build:static && node dev-server.js",
     "build:static": "npx esbuild js/app/static.js --bundle --minify --outfile=dist/static.js",
-    "build": "npx esbuild js/app/static.js --bundle --minify --outdir=dist",
-    "build:public": "npm run build && node -e \"const fs=require('fs-extra');fs.ensureDir('public').then(()=>Promise.all(['assets','css','dist','index.html','wedding-config.js'].map(f=>fs.copy(f,'public/'+f)))).then(()=>console.log('✅ Successfully!'));\""
+    "build": "npm run build:static && npm run build:copy",
+    "build:copy": "node -e \"const fs=require('fs-extra'); Promise.all([fs.copy('index.html','dist/index.html'), fs.copy('wedding-config.js','dist/wedding-config.js'), fs.copy('_redirects','dist/_redirects'), fs.copy('assets','dist/assets'), fs.copy('css','dist/css')]).then(()=>console.log('✅ Build files copied successfully!')).catch(err=>console.error('❌ Error copying files:', err));\""
   },
   "dependencies": {
     "esbuild": "^0.24.2",
