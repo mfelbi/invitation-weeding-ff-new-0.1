@@ -1,25 +1,21 @@
 {
   "version": 2,
-  "routes": [
+  "rewrites": [
     {
-      "src": "/assets/(.*)",
-      "dest": "/assets/$1"
+      "source": "/assets/(.*)",
+      "destination": "/assets/$1"
     },
     {
-      "src": "/css/(.*)",
-      "dest": "/css/$1"
+      "source": "/css/(.*)",
+      "destination": "/css/$1"
     },
     {
-      "src": "/dist/(.*)",
-      "dest": "/dist/$1"
+      "source": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|webp|mp3|mp4|woff|woff2|ttf|eot))",
+      "destination": "/$1"
     },
     {
-      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|webp|mp3|mp4|woff|woff2|ttf|eot))",
-      "dest": "/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ],
   "headers": [
@@ -33,7 +29,7 @@
       ]
     },
     {
-      "source": "/(index.html|wedding-config.js)",
+      "source": "/(index.html)",
       "headers": [
         {
           "key": "Cache-Control",
