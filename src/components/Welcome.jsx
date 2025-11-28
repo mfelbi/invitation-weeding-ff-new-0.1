@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Welcome = ({ data, onOpen }) => {
+const Welcome = ({ data, onOpen, onPlayMusic }) => {
   return (
     <div className="loading-page bg-white-black" style={{ opacity: 1 }}>
       <div className="d-flex justify-content-center align-items-center vh-100 overflow-y-auto">
@@ -44,24 +44,31 @@ const Welcome = ({ data, onOpen }) => {
           </div>
 
           <div style={{ opacity: 0, animation: 'fadeIn 1s ease-out 1.2s forwards' }}>
-            <button
-              type="button"
-              className="btn btn-light shadow rounded-4 mt-3 mx-auto px-4 py-2"
-              onClick={onOpen}
-              style={{
-                background: "linear-gradient(45deg, #ff69b4, #ff1493)",
-                border: "none",
-                color: "white",
-                fontWeight: "bold",
-                transition: 'transform 0.3s ease'
-              }}
-              onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'}
-              onMouseOut={(e) => e.target.style.transform = 'scale(1)'}
-            >
-              <i className="fa-solid fa-envelope-open me-2"></i>
-              Open Invitation
-              <i className="fa-solid fa-heart ms-2"></i>
-            </button>
+            <div className="d-flex flex-column gap-2">
+              <button
+                type="button"
+                className="btn btn-light shadow rounded-4 mt-3 mx-auto px-4 py-2"
+                onClick={() => {
+                  // Auto-play music saat buka invitation
+                  if (onPlayMusic) onPlayMusic();
+                  // Buka undangan setelah musik mulai (delay 100ms)
+                  setTimeout(onOpen, 100);
+                }}
+                style={{
+                  background: "linear-gradient(45deg, #ff69b4, #ff1493)",
+                  border: "none",
+                  color: "white",
+                  fontWeight: "bold",
+                  transition: 'transform 0.3s ease'
+                }}
+                onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'}
+                onMouseOut={(e) => e.target.style.transform = 'scale(1)'}
+              >
+                <i className="fa-solid fa-envelope-open me-2"></i>
+                Open Invitation
+                <i className="fa-solid fa-heart ms-2"></i>
+              </button>
+            </div>
           </div>
         </div>
       </div>

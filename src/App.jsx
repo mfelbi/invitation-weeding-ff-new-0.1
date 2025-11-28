@@ -144,11 +144,55 @@ function App() {
   }, []);
 
   const openInvitation = () => {
+    console.log('🎵 openInvitation called - audioRef:', audioRef.current ? 'exists' : 'null');
+
     setShowWelcome(false);
     // Reset animation state
     setShowWeddingAnimation(false);
     setAnimationCompleted(false);
     setShowInvitation(false);
+
+    // Enhanced mobile-friendly auto-play
+    if (audioRef.current) {
+      console.log('🎵 Attempting to play audio:', weddingData.assets.audio);
+
+      // Reset audio state first
+      audioRef.current.currentTime = 0;
+      audioRef.current.volume = 0.3;
+
+      // Try multiple strategies for mobile browsers
+      const attemptPlay = () => {
+        const playPromise = audioRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            setMusicPlaying(true);
+            console.log('✅ Auto-play music started successfully - musicPlaying state updated to true');
+          }).catch(err => {
+            console.log('❌ Auto-play failed:', err.message);
+
+            // Mobile fallback: try muted play first, then unmute
+            audioRef.current.muted = true;
+            audioRef.current.play().then(() => {
+              audioRef.current.muted = false;
+              setMusicPlaying(true);
+              console.log('✅ Mobile auto-play with unmute worked');
+            }).catch(err2 => {
+              console.log('❌ Mobile fallback also failed:', err2.message);
+              setMusicPlaying(false);
+            });
+          });
+        }
+      };
+
+      // Try immediately
+      attemptPlay();
+
+      // Mobile fallback: try again after a short delay
+      setTimeout(attemptPlay, 100);
+
+    } else {
+      console.log('❌ Audio element not found');
+    }
 
     // Start wedding animation immediately for better responsiveness
     setTimeout(() => {
@@ -163,20 +207,7 @@ function App() {
       setShowInvitation(true);
       activateWeddingEntrance();
 
-      // Start music automatically when invitation opens
-      setTimeout(() => {
-        if (audioRef.current) {
-          audioRef.current.volume = 0.3;
-          audioRef.current.play().then(() => {
-            setMusicPlaying(true);
-          }).catch(err => {
-            console.log('Auto-play failed:', err);
-            // User will need to manually click music button
-          });
-        } else {
-          setMusicPlaying(false);
-        }
-      }, 1000); // Start music after 1 second for dramatic effect
+      // Music is already handled in openInvitation()
 
       // Reset animation state after completion
       setTimeout(() => {
@@ -196,26 +227,7 @@ function App() {
       });
     }, 200);
 
-    // Initialize audio playback on first user interaction
-    const initAudio = () => {
-      if (audioRef.current && !audioRef.current.played) {
-        // Create a user interaction to enable audio
-        audioRef.current.volume = 0.3;
-        audioRef.current.played = true;
-
-        // Play a short silent sound to "warm up" the audio context
-        audioRef.current.play().then(() => {
-          audioRef.current.pause();
-        }).catch(() => {
-          // Ignore errors, just trying to initialize audio context
-        });
-      }
-    };
-
-    // Initialize audio on any user interaction
-    document.addEventListener('click', initAudio, { once: true });
-    document.addEventListener('touchstart', initAudio, { once: true });
-    document.addEventListener('keydown', initAudio, { once: true });
+    // Audio is initialized in openInvitation() - no need for additional listeners
   };
 
   const openModal = (imageSrc) => {
@@ -235,6 +247,25 @@ function App() {
       document.body.setAttribute('data-bs-theme', prefersDark ? 'dark' : 'light');
     } else {
       document.body.setAttribute('data-bs-theme', newTheme);
+    }
+  };
+
+  const playMusicOnly = () => {
+    if (audioRef.current) {
+      console.log('🎵 Playing music only (keep welcome screen)');
+      audioRef.current.volume = 0.3;
+      audioRef.current.currentTime = 0;
+
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          setMusicPlaying(true);
+          console.log('✅ Music started successfully from welcome screen');
+        }).catch(err => {
+          console.log('❌ Music play failed:', err.message);
+          setMusicPlaying(false);
+        });
+      }
     }
   };
 
@@ -264,10 +295,37 @@ function App() {
 
   return (
     <div className={`App ${theme}`}>
+      {/* Always render audio element so audioRef is available */}
+      <audio
+        ref={audioRef}
+        loop
+        preload="auto"
+        playsInline
+        muted={false}
+        crossOrigin="anonymous"
+        onError={(e) => {
+          console.error('❌ Audio loading error:', e);
+          console.log('❌ Failed to load audio:', weddingData.assets.audio);
+        }}
+        onLoadStart={() => {
+          console.log('🔄 Starting to load audio:', weddingData.assets.audio);
+        }}
+        onCanPlay={() => {
+          console.log('✅ Audio ready to play:', weddingData.assets.audio);
+        }}
+        onCanPlayThrough={() => {
+          console.log('✅ Audio fully loaded:', weddingData.assets.audio);
+        }}
+      >
+        <source src={weddingData.assets.audio} type="audio/mpeg" />
+        <source src={weddingData.assets.audio.replace('.mp3', '.ogg')} type="audio/ogg" />
+      </audio>
+
       {showWelcome && !showInvitation && (
         <Welcome
           data={weddingData}
           onOpen={openInvitation}
+          onPlayMusic={playMusicOnly}
         />
       )}
 
@@ -314,27 +372,35 @@ function App() {
           {/* Hidden Audio Element */}
           <audio
             ref={audioRef}
-            src={weddingData.assets.audio}
             loop
             preload="auto"
             playsInline
             muted={false}
             crossOrigin="anonymous"
             onError={(e) => {
-              console.error('Audio loading error:', e);
-              console.log('Failed to load audio:', weddingData.assets.audio);
+              console.error('❌ Audio loading error:', e);
+              console.log('❌ Failed to load audio:', weddingData.assets.audio);
             }}
-            onLoad={() => {
-              console.log('Audio loaded successfully:', weddingData.assets.audio);
+            onLoadStart={() => {
+              console.log('🔄 Starting to load audio:', weddingData.assets.audio);
             }}
-          />
+            onCanPlay={() => {
+              console.log('✅ Audio ready to play:', weddingData.assets.audio);
+            }}
+            onCanPlayThrough={() => {
+              console.log('✅ Audio fully loaded:', weddingData.assets.audio);
+            }}
+          >
+            <source src={weddingData.assets.audio} type="audio/mpeg" />
+            <source src={weddingData.assets.audio.replace('.mp3', '.ogg')} type="audio/ogg" />
+          </audio>
 
           <FloatingButtons
             onThemeToggle={toggleTheme}
             onMusicToggle={toggleMusic}
             musicPlaying={musicPlaying}
             theme={theme}
-          />
+          />}
         </>
       )}
 

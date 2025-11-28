@@ -7,7 +7,10 @@ const FloatingButtons = ({ onThemeToggle, onMusicToggle, musicPlaying, theme }) 
     buttons.forEach(button => {
       button.classList.remove('d-none');
     });
-  }, []);
+
+    // Debug music button status
+    console.log('🎵 FloatingButtons rendered - musicPlaying:', musicPlaying);
+  }, [musicPlaying]); // Re-render when musicPlaying changes
 
   const getThemeIcon = () => {
     if (theme === 'auto') return 'fa-circle-half-stroke';
