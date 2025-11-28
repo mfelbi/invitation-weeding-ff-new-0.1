@@ -113,3 +113,23 @@ svg {
 .no-gap-bottom {
     margin-bottom: -0.75rem !important;
 }
+
+/* Simple fade-in animation for better mobile performance */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Reduce motion for better mobile performance */
+@media (prefers-reduced-motion: reduce) {
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+}

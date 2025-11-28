@@ -62,7 +62,7 @@ orang-orang tercinta.`,
   },
 
   assets: {
-    audio: "/assets/music/pure-love-304010.mp3",
+    audio: "/assets/music/You Make Me Smile.mp3",
     mainPhoto: "/assets/images/bg1.webp",
     placeholder: "/assets/images/placeholder.webp",
     video: "/assets/video/265501_tiny.mp4"
@@ -147,10 +147,10 @@ function App() {
     setAnimationCompleted(false);
     setShowInvitation(false);
 
-    // Start wedding animation after brief delay
+    // Start wedding animation immediately for better responsiveness
     setTimeout(() => {
       setShowWeddingAnimation(true);
-    }, 300);
+    }, 100);
   };
 
   const handleAnimationComplete = () => {
