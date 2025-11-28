@@ -19,7 +19,9 @@
       "Bash(curl:*)",
       "Bash(timeout 10 npm run dev:*)",
       "Bash(git commit:*)",
-      "Bash(git reset:*)"
+      "Bash(git reset:*)",
+      "Bash(git push:*)",
+      "Bash(git add:*)"
     ],
     "deny": [],
     "ask": []
