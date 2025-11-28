@@ -17,7 +17,9 @@
       "Bash(TASKKILL:*)",
       "Bash(powershell:*)",
       "Bash(curl:*)",
-      "Bash(timeout 10 npm run dev:*)"
+      "Bash(timeout 10 npm run dev:*)",
+      "Bash(git commit:*)",
+      "Bash(git reset:*)"
     ],
     "deny": [],
     "ask": []
