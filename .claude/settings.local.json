@@ -21,7 +21,10 @@
       "Bash(git commit:*)",
       "Bash(git reset:*)",
       "Bash(git push:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(cat:*)",
+      "Bash(git checkout:*)",
+      "Bash(\"d:/Projek/invitation-weeding-ff-new-0.1/src/App.jsx\" '<<'EOF ')"
     ],
     "deny": [],
     "ask": []
