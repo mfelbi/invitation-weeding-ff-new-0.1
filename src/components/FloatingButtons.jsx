@@ -14,6 +14,25 @@ const FloatingButtons = ({ onThemeToggle, onMusicToggle, musicPlaying, theme }) 
     return theme === 'light' ? 'fa-moon' : 'fa-sun';
   };
 
+  const handleMusicClick = () => {
+    // Create audio element manually to avoid CSP issues
+    const audio = new Audio('/assets/music/You Make Me Smile.mp3');
+    audio.loop = true;
+    audio.volume = 0.3;
+
+    if (musicPlaying) {
+      audio.pause();
+    } else {
+      // Try to play audio (may fail due to browser autoplay policy)
+      audio.play().catch(err => {
+        console.log('Music play failed:', err);
+        // Fallback: show message to user to click again
+      });
+    }
+
+    onMusicToggle();
+  };
+
   return (
     <div className="d-flex position-fixed flex-column" style={{ bottom: "10vh", right: "2vh", zIndex: 1030 }}>
       {/* Theme Button */}
@@ -31,8 +50,8 @@ const FloatingButtons = ({ onThemeToggle, onMusicToggle, musicPlaying, theme }) 
       <button
         type="button"
         className="btn btn-outline-light bg-light-dark border btn-sm rounded-circle floating-button shadow-sm"
-        aria-label="Change audio"
-        onClick={onMusicToggle}
+        aria-label="Play/Pause music"
+        onClick={handleMusicClick}
         style={{ display: 'block' }}
       >
         <i className={`fa-solid ${musicPlaying ? 'fa-circle-pause' : 'fa-circle-play'}`}></i>
