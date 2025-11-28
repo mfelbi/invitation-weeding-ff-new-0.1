@@ -15,19 +15,23 @@ const FloatingButtons = ({ onThemeToggle, onMusicToggle, musicPlaying, theme }) 
   };
 
   const handleMusicClick = () => {
-    // Create audio element manually to avoid CSP issues
-    const audio = new Audio('/assets/music/You Make Me Smile.mp3');
-    audio.loop = true;
-    audio.volume = 0.3;
+    // Use the global audio element from App.js
+    const globalAudio = document.querySelector('audio');
 
-    if (musicPlaying) {
-      audio.pause();
-    } else {
-      // Try to play audio (may fail due to browser autoplay policy)
-      audio.play().catch(err => {
-        console.log('Music play failed:', err);
-        // Fallback: show message to user to click again
-      });
+    if (globalAudio) {
+      globalAudio.volume = 0.3;
+
+      if (musicPlaying) {
+        globalAudio.pause();
+      } else {
+        // Try to play audio (may fail due to browser autoplay policy)
+        globalAudio.play().catch(err => {
+          console.log('Music play failed:', err);
+          // Fallback: show message to user to click again
+          onMusicToggle(); // Reset state if play fails
+          return;
+        });
+      }
     }
 
     onMusicToggle();

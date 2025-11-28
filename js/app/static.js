@@ -85,46 +85,18 @@ const theme = {
     }
 };
 
-// Audio Player
+// Audio Player - Disabled in favor of React implementation
 const audio = {
     init: () => {
-        const audioUrl = document.body.getAttribute('data-audio');
-        const buttonMusic = document.getElementById('button-music');
+        // Audio handling is now done in React (App.js and FloatingButtons.jsx)
+        // This prevents duplicate audio elements and CSP issues
 
-        if (!audioUrl || !buttonMusic) return;
-
-        let audioEl = new Audio(audioUrl);
-        audioEl.loop = true;
-        audioEl.muted = false;
-        audioEl.autoplay = false;
-        audioEl.controls = false;
-
-        let isPlay = false;
-
-        const play = async () => {
-            try {
-                await audioEl.play();
-                isPlay = true;
-                buttonMusic.innerHTML = '<i class="fa-solid fa-circle-pause spin-button"></i>';
-            } catch (err) {
-                console.log('Audio play failed:', err);
-            }
-        };
-
-        const pause = () => {
-            isPlay = false;
-            audioEl.pause();
-            buttonMusic.innerHTML = '<i class="fa-solid fa-circle-play"></i>';
-        };
-
-        buttonMusic.addEventListener('click', () => {
-            isPlay ? pause() : play();
-        });
-
-        // Show music button after invitation opens
+        // Show existing music button after invitation opens
         document.addEventListener('undangan.open', () => {
-            buttonMusic.classList.remove('d-none');
-            play(); // Auto play when invitation opens
+            const buttonMusic = document.getElementById('button-music');
+            if (buttonMusic) {
+                buttonMusic.classList.remove('d-none');
+            }
         });
     }
 };

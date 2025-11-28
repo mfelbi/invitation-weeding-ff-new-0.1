@@ -114,6 +114,9 @@ function App() {
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const initialTheme = theme === 'auto' ? (prefersDark ? 'dark' : 'light') : theme;
     document.body.setAttribute('data-bs-theme', initialTheme);
+
+    // Set data-audio attribute for static.js compatibility
+    document.body.setAttribute('data-audio', weddingData.assets.audio);
   }, []);
 
   // Handle music
@@ -317,6 +320,13 @@ function App() {
             playsInline
             muted={false}
             crossOrigin="anonymous"
+            onError={(e) => {
+              console.error('Audio loading error:', e);
+              console.log('Failed to load audio:', weddingData.assets.audio);
+            }}
+            onLoad={() => {
+              console.log('Audio loaded successfully:', weddingData.assets.audio);
+            }}
           />
 
           <FloatingButtons
